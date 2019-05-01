@@ -1,57 +1,33 @@
-import typing
+from typing import KeysView
 
 import pygame
 
+import components
 import entities
-import events.event_handler
-from entities import god
 
 
-class WorldEngine:
-    surface: pygame.Surface
-    clock: pygame.time.Clock
-    max_frame_rate = 60
-    delta_time = 0
-    entities: typing.List[entities.Entity]
+class World:
+    _entity_manager: entities.EntityManager
+    _component_manager: components.ComponentManager
 
-    def __init__(self, size):
-        pygame.init()
-        pygame.display.set_caption("pyWorld", "pyWorld")
+    def __init__(self, surface: pygame.Surface):
+        self.surface = surface
+        self._entity_manager = entities.EntityManager()
+        self._component_manager = components.ComponentManager()
 
-        self.surface = pygame.display.set_mode(size)
-        self.clock = pygame.time.Clock()
+        # make god
+        god = self._entity_manager.create_entity()
 
-        self.entities = []
+        self._component_manager.add_component(components.God, god)
+        self._component_manager.add_component(components.Position, god)
+        self._component_manager.add_component(components.Render, god, radius=15, width=1)
 
-        self.entities.append(god.God())
+    def update(self):
+        self._entity_manager.update()
+        self._component_manager.update()
 
-        self.is_running = True
+    def get_entities(self) -> KeysView:
+        return self._entity_manager.get_entities()
 
-    def tick_clock(self):
-        self.delta_time = self.clock.tick(self.max_frame_rate)
-
-    def handle_draw(self):
-        self.surface.fill(pygame.color.THECOLORS['darkgray'])
-
-        for entity in self.entities:
-            if isinstance(entity, entities.DrawableEntity):
-                entity.draw(self.surface)
-
-        pygame.display.flip()
-
-    def handle_logic(self):
-        for entity in self.entities:
-            entity.logic(self.delta_time)
-
-    @staticmethod
-    def handle_events():
-        for event in pygame.event.get():
-            events.event_handler.handle_event(event)
-
-    def run(self):
-        while self.is_running:
-            self.tick_clock()
-
-            self.handle_events()
-            self.handle_logic()
-            self.handle_draw()
+    def get_entity_components(self, entity_id):
+        return self._component_manager.get_entity_components(entity_id)
