@@ -10,13 +10,11 @@ from world import World
 
 
 class System(abc.ABC):
-    required_components: Set = set()
-
     def __init__(self, world: World, required_components: Set = None):
         self.world = world
         if not required_components:
             required_components = set()
-        self.required_components = required_components
+        self.required_components: Set = required_components
 
     def update(self):
         for entity_id in self.world.get_entities():
@@ -37,7 +35,7 @@ class SystemManager:
     def __init__(self, world: World):
         self.world = world
 
-        self.systems = {
+        self.systems: Set[System] = {
             God(world),
             Movement(world),
             Render(world)
@@ -60,7 +58,6 @@ class Movement(System):
 
 
 class Render(System):
-
     def __init__(self, world: World):
         required_components = {
             components.Render

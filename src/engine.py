@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import pygame
 
 import events
@@ -6,17 +8,15 @@ import world
 
 
 class WorldEngine:
-    surface: pygame.Surface
-    clock: pygame.time.Clock
-    max_frame_rate = 60
     delta_time = 0
 
-    def __init__(self, size):
+    def __init__(self, size: Tuple, max_frame_rate: int):
+        self.max_frame_rate: int = max_frame_rate
         pygame.init()
         pygame.display.set_caption("pyWorld", "pyWorld")
 
-        self.surface = pygame.display.set_mode(size)
-        self.clock = pygame.time.Clock()
+        self.surface: pygame.Surface = pygame.display.set_mode(size)
+        self.clock: pygame.time.Clock = pygame.time.Clock()
 
         self.world = world.World(self.surface)
         self.event_manager = events.EventManager()

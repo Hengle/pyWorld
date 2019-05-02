@@ -7,9 +7,6 @@ import entities
 
 
 class World:
-    _entity_manager: entities.EntityManager
-    _component_manager: components.ComponentManager
-
     def __init__(self, surface: pygame.Surface):
         self.surface = surface
         self._entity_manager = entities.EntityManager()

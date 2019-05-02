@@ -7,10 +7,11 @@ class Component(object):
 
 
 class ComponentManager:
-    _components: Dict[int, Dict] = {}
+    def __init__(self):
+        self._components: Dict[int, Dict] = {}
 
-    __added: Dict[int, Set] = {}
-    __removed: Dict[int, Set] = {}
+        self.__added: Dict[int, Set] = {}
+        self.__removed: Dict[int, Set] = {}
 
     def update(self):
         for entity_id, removed_components in self.__removed.items():

@@ -7,10 +7,10 @@ class Entity:
 
 
 class EntityManager:
-    __entities = {}
-
-    __added: Set = set()
-    __removed: Set = set()
+    def __init__(self):
+        self.__entities = {}
+        self.__added = set()
+        self.__removed = set()
 
     def create_entity(self) -> int:
         entity = Entity()
