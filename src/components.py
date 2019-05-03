@@ -22,7 +22,7 @@ class ComponentManager:
             for added_c in added_components:
                 self._components.setdefault(entity_id, {}).setdefault(type(added_c), added_c)
 
-    def add_component(self, component_type, entity_id, *args, **kwargs):
+    def add_component(self, entity_id, component_type, *args, **kwargs):
         component = component_type(*args, **kwargs)
         self.__added.setdefault(entity_id, set()).add(component)
 
@@ -52,7 +52,7 @@ class Position(Component):
 
 
 class Render(Component):
-    def __init__(self, radius, width):
+    def __init__(self, radius=0, width=0):
         super().__init__()
         self.radius = radius
         self.width = width
@@ -60,3 +60,9 @@ class Render(Component):
 
 class God(Component):
     pass
+
+
+class AI(Component):
+    def __init__(self, max_velocity=(0, 0)):
+        super().__init__()
+        self.max_velocity = max_velocity

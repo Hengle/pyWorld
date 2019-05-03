@@ -2,9 +2,9 @@ from typing import Tuple
 
 import pygame
 
-import events
 import systems
 import world
+from events import events
 
 
 class WorldEngine:
@@ -19,7 +19,7 @@ class WorldEngine:
         self.clock: pygame.time.Clock = pygame.time.Clock()
 
         self.world = world.World(self.surface)
-        self.event_manager = events.EventManager()
+        # self.event_manager = events.EventManager()
         self.system_manager = systems.SystemManager(self.world)
         self.is_running = True
 
@@ -32,7 +32,8 @@ class WorldEngine:
 
             self.surface.fill(pygame.color.THECOLORS['gray50'])
 
-            self.event_manager.update()
+            events.update()
+
             self.world.update()
             self.system_manager.update()
 
