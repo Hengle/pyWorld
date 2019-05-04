@@ -1,45 +1,33 @@
 from typing import Set
 
 import pygame
-from pygame.event import Event
 
-keys_pressed: Set = set()
-keys_held: Set = set()
-keys_released: Set = set()
+pressed: Set = set()
+held: Set = set()
 
 
 def update():
-    keys_held.add
+    for key in pressed:
+        held.add(key)
+    pressed.clear()
 
 
-def handle_event(event: Event):
-    global keys_pressed
-    global keys_held
-    global keys_released
-
-    event_key = event.key
-
+def handle_event(event: pygame.event.Event):
+    key = event.key
     if is_key_down(event):
-        if event_key in keys_pressed:
-            keys_pressed.remove(event_key)
-            keys_held.add(event_key)
-        else:
-            keys_pressed.add(event_key)
+        pressed.add(key)
     elif is_key_up(event):
-        if event_key in keys_pressed:
-            keys_pressed.remove(event_key)
-        elif event_key in keys_held:
-            keys_held.remove(event_key)
-        keys_released.add(event_key)
-
-    print(f"[{keys_pressed}] [{keys_held}] [{keys_released}]")
+        if key in pressed:
+            pressed.remove(key)
+        else:
+            held.remove(key)
 
 
-def is_key_up(event):
+def is_key_up(event: pygame.event.Event):
     return event.type == pygame.KEYUP
 
 
-def is_key_down(event):
+def is_key_down(event: pygame.event.Event):
     return event.type == pygame.KEYDOWN
 
 
