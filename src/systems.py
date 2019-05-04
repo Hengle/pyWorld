@@ -102,6 +102,18 @@ class Movement(System):
 
         position.set_position((new_x, new_y))
         velocity.set_velocity((new_vx, new_vy))
+
+
+class Acceleration(System):
+    def __init__(self, world: World):
+        required_components: Set = {
+            components.Velocity,
+            components.Acceleration
+        }
+        super().__init__(world, required_components)
+
+    def update_entity(self, entity_id, entity_components):
+        # TODO
         pass
 
 
@@ -121,3 +133,17 @@ class Render(System):
                            position.get_as_int(),
                            render.radius,
                            render.width)
+
+
+class Brain(System):
+    def __init__(self, world: World):
+        required_components = {
+            components.AI,
+            components.Position,
+            components.Velocity
+        }
+        super().__init__(world, required_components)
+
+    def update_entity(self, entity_id, entity_components):
+        # TODO
+        pass

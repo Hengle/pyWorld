@@ -30,7 +30,7 @@ class WorldEngine:
         while self.is_running:
             self.tick_clock()
 
-            self.surface.fill(pygame.color.THECOLORS['gray50'])
+            self.surface.fill(pygame.color.THECOLORS['gray10'])
 
             events.update()
 

@@ -83,6 +83,6 @@ class God(Component):
 
 
 class AI(Component):
-    def __init__(self, max_velocity=(0, 0)):
+    def __init__(self):
         super().__init__()
-        self.max_velocity = max_velocity
+    # TODO
