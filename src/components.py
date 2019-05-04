@@ -33,10 +33,22 @@ class ComponentManager:
         return self._components[entity_id]
 
 
+class Acceleration(Component):
+    def __init__(self, acceleration=0, max_velocity=0):
+        super().__init__()
+        self.acceleration = acceleration
+        self.max_velocity = max_velocity
+
+
 class Velocity(Component):
     def __init__(self, velocity=(0, 0)):
         super().__init__()
         self.velocity = velocity
+
+    def __getitem__(self, item):
+        if item > 1:
+            return None
+        return self.velocity[item]
 
     def set_velocity(self, velocity):
         self.velocity = velocity
@@ -46,6 +58,14 @@ class Position(Component):
     def __init__(self, position=(0, 0)):
         super().__init__()
         self.position = position
+
+    def __getitem__(self, item):
+        if item > 1:
+            return None
+        return self.position[item]
+
+    def get_as_int(self):
+        return int(self.position[0]), int(self.position[1])
 
     def set_position(self, position):
         self.position = position

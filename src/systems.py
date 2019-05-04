@@ -6,6 +6,7 @@ import pygame
 
 import colors
 import components
+import events
 from world import World
 
 
@@ -55,19 +56,17 @@ class God(System):
         super().__init__(world, required)
         self.m1_clicked = False
 
-    def should_create_entity(self):
-        return self.m1_clicked
-
     def update_entity(self, entity_id, entity_components):
-        god_position: components.Position = entity_components[components.Position]
-        god_position.set_position(pygame.mouse.get_pos())
+        position: components.Position = entity_components[components.Position]
+        position.set_position(pygame.mouse.get_pos())
 
-        if self.should_create_entity():
+        if 1 in events.mouse.held:
             bot_entity = self.world.entity_manager.create_entity()
-            self.world.component_manager.add_component(bot_entity, components.AI, max_velocity=(3, 3))
-            self.world.component_manager.add_component(bot_entity, components.Position, position=pygame.mouse.get_pos())
-            self.world.component_manager.add_component(bot_entity, components.Velocity)
-            self.world.component_manager.add_component(bot_entity, components.Render, radius=10, width=1)
+            self.world.component_manager.add_component(bot_entity, components.AI)
+            self.world.component_manager.add_component(bot_entity, components.Position, position)
+            self.world.component_manager.add_component(bot_entity, components.Velocity, (2, 2))
+            self.world.component_manager.add_component(bot_entity, components.Render, 20, 1)
+            self.world.component_manager.add_component(bot_entity, components.Acceleration, 0.1, 2)
 
 
 class Movement(System):
@@ -79,6 +78,30 @@ class Movement(System):
         super().__init__(world, required)
 
     def update_entity(self, entity_id, entity_components):
+        position: components.Position = entity_components[components.Position]
+        velocity: components.Velocity = entity_components[components.Velocity]
+
+        new_x, new_y = position[0] + velocity[0], position[1] + velocity[1]
+        new_vx, new_vy = velocity[0], velocity[1]
+
+        max_x, max_y = self.world.surface.get_size()
+
+        if new_x > max_x:
+            new_x = max_x
+            new_vx = -new_vx
+        elif new_x < 0:
+            new_x = 0
+            new_vx = -new_vx
+
+        if new_y > max_y:
+            new_y = max_y
+            new_vy = -new_vy
+        elif new_y < 0:
+            new_y = 0
+            new_vy = -new_vy
+
+        position.set_position((new_x, new_y))
+        velocity.set_velocity((new_vx, new_vy))
         pass
 
 
@@ -91,10 +114,10 @@ class Render(System):
         super().__init__(world, required)
 
     def update_entity(self, entity_id, entity_components):
-        render_component: components.Render = entity_components[components.Render]
-        position_component: components.Position = entity_components[components.Position]
+        render: components.Render = entity_components[components.Render]
+        position: components.Position = entity_components[components.Position]
 
         pygame.draw.circle(self.world.surface, colors.red,
-                           position_component.position,
-                           render_component.radius,
-                           render_component.width)
+                           position.get_as_int(),
+                           render.radius,
+                           render.width)

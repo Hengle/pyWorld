@@ -6,9 +6,9 @@ import entities
 
 class World:
     def __init__(self, surface: pygame.Surface):
-        self.surface = surface
-        self.entity_manager = entities.EntityManager()
-        self.component_manager = components.ComponentManager()
+        self.surface: pygame.Surface = surface
+        self.entity_manager: entities.EntityManager = entities.EntityManager()
+        self.component_manager: components.ComponentManager = components.ComponentManager()
 
         # make god
         god = self.entity_manager.create_entity()
