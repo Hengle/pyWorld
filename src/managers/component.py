@@ -1,6 +1,6 @@
 from typing import Dict, Set, TypeVar
 
-from .component import Component
+from components import Component
 
 
 class ComponentManager:

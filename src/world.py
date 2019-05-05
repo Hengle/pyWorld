@@ -1,14 +1,14 @@
 import pygame
 
 import components
-import entities
+import managers
 
 
 class World:
     def __init__(self, surface: pygame.Surface):
         self.surface: pygame.Surface = surface
-        self.entity_manager: entities.EntityManager = entities.EntityManager()
-        self.component_manager: components.ComponentManager = components.ComponentManager()
+        self.entity_manager: managers.EntityManager = managers.EntityManager()
+        self.component_manager: managers.ComponentManager = managers.ComponentManager()
 
         # make god
         god = self.entity_manager.create_entity()

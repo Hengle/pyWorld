@@ -1,10 +1,7 @@
 from typing import Set
 
+from systems import God, Movement, Render, System
 from world import World
-from .god import God
-from .movement import Movement
-from .render import Render
-from .system import System
 
 
 class SystemManager:
