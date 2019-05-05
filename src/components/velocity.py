@@ -1,12 +1,8 @@
-from .component import Component
+from typing import Tuple
+
+from .vector import Vector2D
 
 
-class Velocity(Component):
-    def __init__(self, velocity=(0, 0)):
-        super().__init__()
-        self.velocity = velocity
-
-    def __getitem__(self, item):
-        if item > 1 or not self.velocity:
-            return None
-        return self.velocity[item]
+class Velocity(Vector2D):
+    def __init__(self, velocity: Tuple = (0, 0)):
+        super().__init__(velocity)

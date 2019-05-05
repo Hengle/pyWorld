@@ -17,8 +17,7 @@ class ComponentManager:
 
         for entity_id, added_components in self.__added.items():
             for added_c in added_components:
-                self._components.setdefault(entity_id, components.ComponentMap())\
-                    .setdefault(type(added_c), added_c)
+                self._components.setdefault(entity_id, components.ComponentMap()).setdefault(type(added_c), added_c)
 
     def add_component(self, entity_id, component_type: Type[components.Component], *args, **kwargs):
         component = component_type(*args, **kwargs)

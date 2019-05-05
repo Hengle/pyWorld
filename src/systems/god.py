@@ -17,7 +17,7 @@ class God(System):
 
     def update_entity(self, entity_id, entity_components):
         position = entity_components[components.Position]
-        position.position = pygame.mouse.get_pos()
+        position.vector = pygame.mouse.get_pos()
 
         if events.mouse.is_m1_pressed():
             bot_entity = self.world.entity_manager.create_entity()
