@@ -1,1 +1,1 @@
-from events import key, mouse
+from . import key, mouse
