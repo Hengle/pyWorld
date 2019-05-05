@@ -1,5 +1,7 @@
 import pygame
 
+M1_BUTTON = 1
+
 pressed = set()
 held = set()
 
@@ -17,13 +19,6 @@ def is_mouse_event(event: pygame.event.Event):
                           pygame.MOUSEWHEEL}
 
 
-def is_mouse_up(event: pygame.event.Event):
-    if event.type == pygame.MOUSEBUTTONUP:
-        global mouse_released
-        mouse_released = True
-    return mouse_released
-
-
 def handle_event(event: pygame.event.Event):
     event_type = event.type
     if event_type == pygame.MOUSEBUTTONDOWN:
@@ -37,5 +32,12 @@ def handle_event(event: pygame.event.Event):
     elif event_type == pygame.MOUSEWHEEL:
         pass
     elif event_type == pygame.MOUSEMOTION:
-        buttons = event.buttons
         pass
+
+
+def is_m1_pressed() -> bool:
+    return M1_BUTTON in pressed
+
+
+def is_m1_held() -> bool:
+    return M1_BUTTON in held

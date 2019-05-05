@@ -19,7 +19,7 @@ class God(System):
         position = entity_components[components.Position]
         position.position = pygame.mouse.get_pos()
 
-        if 1 in events.mouse.pressed:
+        if events.mouse.is_m1_pressed():
             bot_entity = self.world.entity_manager.create_entity()
             self.world.component_manager.add_component(bot_entity, components.Brain)
             self.world.component_manager.add_component(bot_entity, components.Position, pygame.mouse.get_pos())
