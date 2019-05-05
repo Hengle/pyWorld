@@ -7,9 +7,6 @@ class Velocity(Component):
         self.velocity = velocity
 
     def __getitem__(self, item):
-        if item > 1:
+        if item > 1 or not self.velocity:
             return None
         return self.velocity[item]
-
-    def set_velocity(self, velocity):
-        self.velocity = velocity

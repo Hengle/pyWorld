@@ -16,13 +16,11 @@ class God(System):
         self.m1_clicked = False
 
     def update_entity(self, entity_id, entity_components):
-        position: components.Position = entity_components[components.Position]
-        position.set_position(pygame.mouse.get_pos())
+        position = entity_components[components.Position]
+        position.position = pygame.mouse.get_pos()
 
-        if 1 in events.mouse.held:
+        if 1 in events.mouse.pressed:
             bot_entity = self.world.entity_manager.create_entity()
-            self.world.component_manager.add_component(bot_entity, components.AI)
-            self.world.component_manager.add_component(bot_entity, components.Position, position)
-            self.world.component_manager.add_component(bot_entity, components.Velocity, (2, 2))
+            self.world.component_manager.add_component(bot_entity, components.Brain)
+            self.world.component_manager.add_component(bot_entity, components.Position, pygame.mouse.get_pos())
             self.world.component_manager.add_component(bot_entity, components.Render, 20, 1)
-            self.world.component_manager.add_component(bot_entity, components.Acceleration, 0.1, 2)

@@ -12,8 +12,8 @@ class Movement(System):
         super().__init__(world, required)
 
     def update_entity(self, entity_id, entity_components):
-        position: components.Position = entity_components[components.Position]
-        velocity: components.Velocity = entity_components[components.Velocity]
+        position = entity_components[components.Position]
+        velocity = entity_components[components.Velocity]
 
         new_x, new_y = position[0] + velocity[0], position[1] + velocity[1]
         new_vx, new_vy = velocity[0], velocity[1]
@@ -34,5 +34,5 @@ class Movement(System):
             new_y = 0
             new_vy = -new_vy
 
-        position.set_position((new_x, new_y))
-        velocity.set_velocity((new_vx, new_vy))
+        position.position = (new_x, new_y)
+        velocity.velocity = (new_vx, new_vy)

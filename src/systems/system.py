@@ -1,6 +1,7 @@
 import abc
-from typing import Set, Dict
+from typing import Set
 
+from components import ComponentMap
 from world import World
 
 
@@ -21,6 +22,6 @@ class System(abc.ABC):
     def update_entity(self, entity_id, entity_components):
         pass
 
-    def is_applicable(self, entity_components: Dict):
+    def is_applicable(self, entity_components: ComponentMap):
         x = [k in entity_components for k in self.required_components]
         return all(x)

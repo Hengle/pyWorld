@@ -7,12 +7,9 @@ class Position(Component):
         self.position = position
 
     def __getitem__(self, item):
-        if item > 1:
+        if item > 1 or not self.position:
             return None
         return self.position[item]
 
     def get_as_int(self):
-        return int(self.position[0]), int(self.position[1])
-
-    def set_position(self, position):
-        self.position = position
+        return int(self[0]), int(self[1])
