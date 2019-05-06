@@ -15,7 +15,8 @@ class Movement(System):
         position = entity_components[components.Position]
         velocity = entity_components[components.Velocity]
 
-        new_x, new_y = position.x + velocity.x, position.y + velocity.y
+        new_x = position.x + velocity.x
+        new_y = position.y + velocity.y
 
         max_x, max_y = self._world.surface.get_size()
 

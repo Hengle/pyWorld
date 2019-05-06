@@ -20,6 +20,13 @@ class AI(System):
 
     def update_entity(self, entity_id, entity_components):
         brain = entity_components[components.Brain]
+        render = entity_components[components.Render]
+        boundary = entity_components[components.Boundary]
+
+        self._world.component_manager.add_component_if_not_exist(entity_id,
+                                                                 components.Acceleration,
+                                                                 0.2,
+                                                                 1)
 
         if not brain.routine:
             brain.routine = behaviour.Repeat(entity_id, self._world, behaviour.Wander(entity_id, self._world))

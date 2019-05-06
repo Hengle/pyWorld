@@ -1,5 +1,9 @@
+import math
 from typing import Tuple
 
+import pygame
+
+import colors
 import components
 from world import World
 from .routine import Routine
@@ -33,18 +37,24 @@ class Move(Routine):
         entity_components = self._world.component_manager.get_entity_components(self.entity_id)
         position = entity_components[components.Position]
         velocity = entity_components[components.Velocity]
+        boundary = entity_components[components.Boundary]
+        acceleration = entity_components[components.Acceleration]
 
-        new_vx = abs(velocity.x)
-        new_vy = abs(velocity.y)
+        pygame.draw.line(self._world.surface,
+                         colors.green,
+                         position.vector,
+                         self.target.vector)
 
-        if position.x > self.target.x:
-            new_vx = -new_vx
-        velocity.x = new_vx
+        distance_to_target = position.distance_to(self.target)
+        if distance_to_target < boundary.radius:
+            self.succeed()
+            velocity.vector = (0, 0)
+            return
 
-        if position.y > self.target.y:
-            new_vy = -new_vy
-        velocity.y = new_vy
+        angle_to_target = position.angle(self.target)
+        delta = position.delta(self.target)
 
-        velocity.vector = (new_vx, new_vy)
+        new_v_x = math.cos(angle_to_target)
+        new_v_y = math.sin(angle_to_target)
 
-        # if position==self.target
+        velocity.vector = new_v_x, new_v_y
