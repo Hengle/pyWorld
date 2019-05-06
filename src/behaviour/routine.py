@@ -7,7 +7,7 @@ from .state import RoutineState
 class Routine:
     def __init__(self, entity_id, world: World):
         self.entity_id = entity_id
-        self.world = world
+        self._world = world
         self.state = None
 
     def start(self):
