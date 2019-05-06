@@ -5,11 +5,11 @@ from .system import System
 
 class Movement(System):
     def __init__(self, world: World):
-        required = {
+        required_components = {
             components.Position,
             components.Velocity
         }
-        super().__init__(world, required)
+        super().__init__(world, required_components)
 
     def update_entity(self, entity_id, entity_components):
         position = entity_components[components.Position]
@@ -18,7 +18,7 @@ class Movement(System):
         new_x, new_y = position.x + velocity.x, position.y + velocity.y
         new_vx, new_vy = velocity.vector
 
-        max_x, max_y = self.world.surface.get_size()
+        max_x, max_y = self._world.surface.get_size()
 
         if new_x > max_x:
             new_x = max_x

@@ -16,7 +16,3 @@ class World:
         self.component_manager.add_component(god, components.God)
         self.component_manager.add_component(god, components.Position)
         self.component_manager.add_component(god, components.Render, radius=15, width=1)
-
-    def update(self):
-        self.entity_manager.update()
-        self.component_manager.update()

@@ -1,6 +1,6 @@
 from .acceleration import Acceleration
 from .brain import Brain
-from .component import C_T, Component, ComponentMap
+from .component import C_T, Component
 from .god import God
 from .position import Position
 from .render import Render

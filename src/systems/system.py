@@ -1,27 +1,27 @@
 import abc
-from typing import Set
+from typing import Set, Type
 
-from components import ComponentMap
+import components
+import mappers
 from world import World
 
 
 class System(abc.ABC):
-    def __init__(self, world: World, required_components: Set):
-        self.world = world
+    def __init__(self, world: World, required_components: Set[Type[components.Component]] = None):
+        self._world = world
         if not required_components:
             required_components = set()
-        self.required_components: Set = required_components
+        self.required_components: Set[Type[components.Component]] = required_components
 
     def update(self):
-        for entity_id in self.world.entity_manager.get_entities():
-            entity_components = self.world.component_manager.get_entity_components(entity_id)
-            if self.is_applicable(entity_components):
+        for entity_id in self._world.entity_manager.get_entities():
+            entity_components = self._world.component_manager.get_entity_components(entity_id)
+            if self.is_applicable(entity_components.get_keys()):
                 self.update_entity(entity_id, entity_components)
 
     @abc.abstractmethod
-    def update_entity(self, entity_id, entity_components):
+    def update_entity(self, entity_id, entity_components: mappers.ComponentMap):
         pass
 
-    def is_applicable(self, entity_components: ComponentMap):
-        x = [k in entity_components for k in self.required_components]
-        return all(x)
+    def is_applicable(self, entity_components):
+        return self.required_components.issubset(entity_components)

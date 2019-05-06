@@ -34,7 +34,6 @@ class WorldEngine:
 
             events.update()
 
-            self.world.update()
             self.system_manager.update()
 
             pygame.display.flip()
