@@ -1,5 +1,5 @@
 import collections
-from typing import Dict, Iterator, Set, Type
+from typing import Dict, Iterator, List, Set, Type, ValuesView
 
 import entities
 from components import C_T, Component
@@ -32,8 +32,14 @@ class ComponentMap(collections.MutableMapping):
     def get_keys(self) -> Set[Type[Component]]:
         return set(self._components.keys())
 
-    def get_values(self) -> Set[Component]:
-        return set(self._components.values())
+    def get_values(self) -> ValuesView[Component]:
+        return self._components.values()
+
+    def get_sub_keys(self, supertype: Type[C_T]) -> Set[Type[C_T]]:
+        return set([key for key in self._components.keys() if issubclass(key, supertype)])
+
+    def get_sub_values(self, supertype) -> List[C_T]:
+        return [value for value in self._components.values() if isinstance(value, supertype)]
 
     def __getitem__(self, item: Type[C_T]) -> C_T:
         return self._components.get(item)

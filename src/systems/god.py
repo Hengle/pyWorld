@@ -24,5 +24,4 @@ class God(System):
             bot_entity = self._world.entity_manager.create_entity()
             self._world.component_manager.add_component(bot_entity, components.Brain)
             self._world.component_manager.add_component(bot_entity, components.Position, pygame.mouse.get_pos())
-            self._world.component_manager.add_component(bot_entity, components.Render, 10, 1)
-            self._world.component_manager.add_component(bot_entity, components.Boundary, 10)
+            self._world.component_manager.add_component(bot_entity, components.Render)

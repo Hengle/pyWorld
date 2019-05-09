@@ -1,7 +1,8 @@
+from abc import ABC
 from typing import TypeVar
 
 
-class Component:
+class Component(ABC):
     def __init__(self):
         self.identifier = id(self)
 

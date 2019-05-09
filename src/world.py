@@ -15,4 +15,5 @@ class World:
 
         self.component_manager.add_component(god, components.God)
         self.component_manager.add_component(god, components.Position)
-        self.component_manager.add_component(god, components.Render, radius=15, width=1)
+        self.component_manager.add_component(god, components.Render)
+        self.component_manager.add_component(god, components.ShapeCircle, 20, pygame.color.THECOLORS['darkred'])
