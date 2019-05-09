@@ -10,9 +10,10 @@ from .routine import Routine
 
 
 class Move(Routine):
-    def __init__(self, entity_id, world: World, target=None):
+
+    def __init__(self, entity_id, world: World):
         super().__init__(entity_id, world)
-        self._target = target
+        self.target = None
 
     @property
     def target(self) -> components.Vector2D:
@@ -45,6 +46,7 @@ class Move(Routine):
                          self.target.vector)
 
         distance_to_target = position.distance_to(self.target)
+        self.log(f"Moving to target, distance:[{distance_to_target}]")
         if distance_to_target < boundary.radius:
             self.succeed()
             velocity.vector = (0, 0)

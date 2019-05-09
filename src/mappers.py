@@ -48,7 +48,8 @@ class ComponentMap(collections.MutableMapping):
         self._components[key] = value
 
     def __delitem__(self, key: Type[C_T]) -> None:
-        del self._components[key]
+        if self._components.get(key):
+            del self._components[key]
 
     def __len__(self) -> int:
         return len(self._components)

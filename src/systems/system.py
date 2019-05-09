@@ -1,4 +1,5 @@
 import abc
+import traceback
 from typing import Set, Type
 
 import components
@@ -17,7 +18,12 @@ class System(abc.ABC):
         for entity_id in self._world.entity_manager.get_entities():
             entity_components = self._world.component_manager.get_entity_components(entity_id)
             if self.is_applicable(entity_components.get_keys()):
-                self.update_entity(entity_id, entity_components)
+                try:
+                    self.update_entity(entity_id, entity_components)
+                except Exception as e:
+                    print(f"unable to update entity {entity_id}: {e}")
+
+                    traceback.print_exc()
 
     @abc.abstractmethod
     def update_entity(self, entity_id, entity_components: mappers.ComponentMap):

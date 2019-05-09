@@ -13,6 +13,9 @@ class Routine:
     def start(self):
         self.state = RoutineState.RUNNING
 
+    def log(self, text):
+        print(f"{self.entity_id}->{text}")
+
     @abc.abstractmethod
     def reset(self):
         pass
