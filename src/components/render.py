@@ -1,3 +1,4 @@
+import colors
 from .component import Component
 
 
@@ -7,7 +8,7 @@ class Render(Component):
 
 
 class RenderShape(Component):
-    def __init__(self, color):
+    def __init__(self, color=colors.blue):
         super().__init__()
         self.color = color
 

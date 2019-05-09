@@ -38,7 +38,6 @@ class Move(Routine):
         position = entity_components[components.Position]
         velocity = entity_components[components.Velocity]
         boundary = entity_components[components.Boundary]
-        acceleration = entity_components[components.Acceleration]
 
         pygame.draw.line(self._world.surface,
                          colors.green,
