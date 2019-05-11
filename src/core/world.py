@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 
@@ -8,6 +10,7 @@ class World:
 
         self.surface: pygame.Surface = surface
         self.ec_manager: managers.EntityComponentManager = managers.EntityComponentManager()
+        self.is_debug = True
 
         # make god
         god = self.ec_manager.create_entity()
@@ -18,7 +21,13 @@ class World:
         self.ec_manager.create_component(god, ShapeCircle, 20, pygame.color.THECOLORS['darkred'])
 
     def log_line(self, entity_id, key, value):
-        from components import Debug
+        if not self.is_debug:
+            return
+        from components.debug import Debug
         debug = self.ec_manager.get_entity_components(entity_id)[Debug]
         if debug:
             debug.lines[key] = value
+
+    def get_random_location(self):
+        max_x, max_y = self.surface.get_size()
+        return random.randint(0, max_x), random.randint(0, max_y)

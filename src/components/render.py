@@ -7,13 +7,14 @@ class Render(Component):
 
 
 class RenderShape(Component):
-    def __init__(self, color=colors.blue):
+    def __init__(self, color=colors.blue, filled=False):
         self.color = color
+        self.filled = filled
 
 
 class ShapeSquare(RenderShape):
-    def __init__(self, size=0, color=None):
-        super().__init__(color)
+    def __init__(self, size=0, color=None, filled=False):
+        super().__init__(color, filled)
         self.size = size
 
     def get_corners(self, position):
@@ -31,6 +32,6 @@ class ShapeSquare(RenderShape):
 
 
 class ShapeCircle(RenderShape):
-    def __init__(self, radius=0, color=None):
-        super().__init__(color)
+    def __init__(self, radius=0, color=None, filled=False):
+        super().__init__(color, filled)
         self.radius = radius

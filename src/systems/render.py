@@ -23,7 +23,7 @@ class Render(System):
             pygame.draw.circle(
                 self._world.surface,
                 circle.color,
-                position.vector,
+                position.get_as_int(),
                 circle.radius,
                 2
             )

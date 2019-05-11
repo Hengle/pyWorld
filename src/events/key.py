@@ -6,6 +6,14 @@ pressed: Set = set()
 held: Set = set()
 
 
+def is_key_pressed(key_code):
+    return key_code in pressed
+
+
+def is_key_held(key_code):
+    return key_code in held
+
+
 def update():
     for key in pressed:
         held.add(key)

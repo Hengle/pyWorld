@@ -14,7 +14,7 @@ class SystemManager:
             systems.Movement,
             systems.Render,
             systems.AI,
-            systems.Debugging
+            systems.Logging
         }
 
         self.systems = [system(world) for system in system_types]

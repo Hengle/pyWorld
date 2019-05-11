@@ -13,8 +13,8 @@ class Routine:
     def start(self):
         self.state = RoutineState.RUNNING
 
-    def log(self, text):
-        print(f"{self.entity_id}->{text}")
+    def log(self, key, value):
+        self._world.log_line(self.entity_id, key, value)
 
     @abc.abstractmethod
     def reset(self):

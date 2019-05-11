@@ -1,5 +1,3 @@
-import random
-
 import components
 from behaviour import Move, Routine, Stand
 from core.world import World
@@ -14,11 +12,6 @@ class Wander(Routine):
     def reset(self):
         pass
 
-    def find_random_location(self):
-        max_x, max_y = self._world.surface.get_size()
-        return random.randint(0, max_x), random.randint(0, max_y)
-        # return 0, 0
-
     def act(self):
         if self.move.is_running():
             self.move.act()
@@ -26,7 +19,7 @@ class Wander(Routine):
             self.stand.act()
 
         if not self.move.is_running():
-            self.move.target = self.find_random_location()
+            self.move.target = self._world.get_random_location()
             self._world.ec_manager.create_component(
                 self.entity_id,
                 components.Velocity,

@@ -1,6 +1,6 @@
 import collections
-from typing import Dict, Iterator, Set, Type
-from uuid import uuid4
+import sys
+from typing import Any, Dict, Iterator, Set, Type
 
 import components.component
 
@@ -31,21 +31,25 @@ class ComponentMap(collections.MutableMapping):
 
 class EntityComponentMap(collections.MutableMapping):
     def __init__(self):
-        self._entity_components: Dict[str, ComponentMap] = {}
+        self._entity_components: Dict[Any, ComponentMap] = {}
+        self.id_stack = []
+        self.id_count = 0
 
-    def __getitem__(self, entity_id: str) -> ComponentMap:
+    def __getitem__(self, entity_id) -> ComponentMap:
         return self._entity_components.get(entity_id)
 
-    def __setitem__(self, entity_id: str, value: ComponentMap) -> None:
-        self._entity_components[entity_id] = value
+    def __setitem__(self, entity_id, value: ComponentMap) -> None:
+        if entity_id in self._entity_components:
+            self._entity_components[entity_id] = value
 
-    def __delitem__(self, entity_id: str) -> None:
+    def __delitem__(self, entity_id) -> None:
         del self._entity_components[entity_id]
+        self.id_stack.append(entity_id)
 
     def __len__(self) -> int:
         return len(self._entity_components)
 
-    def __iter__(self) -> Iterator[str]:
+    def __iter__(self) -> Iterator[Any]:
         return iter(self._entity_components.copy())
 
     def items(self):
@@ -56,7 +60,17 @@ class EntityComponentMap(collections.MutableMapping):
         if entity_components is not None:
             entity_components[type(component)] = component
 
-    def create_entity(self) -> str:
-        new_identifier = str(uuid4())
+    def create_entity(self) -> Any:
+        new_identifier = self._get_next_identifier()
+        if new_identifier is None:
+            return None
         self._entity_components.setdefault(new_identifier, ComponentMap())
         return new_identifier
+
+    def _get_next_identifier(self):
+        if self.id_count == sys.maxsize - 1:
+            return None
+        self.id_count += 1
+        next_id = self.id_count
+        # return str(uuid4())
+        return next_id

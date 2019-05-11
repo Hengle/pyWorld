@@ -22,8 +22,8 @@ class AI(System):
     def init_components(self, entity_id):
         self._world.ec_manager.create_component(
             entity_id,
-            components.ShapeSquare,
-            10,
+            components.ShapeCircle,
+            15,
             colors.red
         )
         self._world.ec_manager.create_component(
@@ -35,13 +35,6 @@ class AI(System):
     def update_entity(self, entity_id, entity_components):
         brain = entity_components[components.Brain]
         self.init_components(entity_id)
-
-        self._world.ec_manager.create_component(
-            entity_id,
-            components.Acceleration,
-            0.2,
-            1
-        )
 
         if not brain.routine:
             brain.routine = behaviour.Repeat(entity_id, self._world, behaviour.Wander(entity_id, self._world))
