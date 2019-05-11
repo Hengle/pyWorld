@@ -3,21 +3,20 @@ import traceback
 from typing import Set, Type
 
 import components
-import mappers
-from world import World
+from core import World
+from managers import mappers
 
 
 class System(abc.ABC):
-    def __init__(self, world: World, required_components: Set[Type[components.Component]] = None):
+    def __init__(self, world: World, required_components: Set[Type[components.Component]]):
         self._world = world
         if not required_components:
             required_components = set()
         self.required_components: Set[Type[components.Component]] = required_components
 
     def update(self):
-        for entity_id in self._world.entity_manager.get_entities():
-            entity_components = self._world.component_manager.get_entity_components(entity_id)
-            if self.is_applicable(entity_components.get_keys()):
+        for entity_id, entity_components in self._world.ec_manager.get_items():
+            if self.is_applicable(entity_components.get_component_types()):
                 try:
                     self.update_entity(entity_id, entity_components)
                 except Exception as e:

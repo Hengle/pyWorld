@@ -1,5 +1,5 @@
 import components
-from world import World
+from core import World
 from .system import System
 
 
@@ -31,3 +31,4 @@ class Movement(System):
             new_y = 0
 
         position.vector = (new_x, new_y)
+        self._world.log_line(entity_id, "position", f"{position.x}:{position.y}")

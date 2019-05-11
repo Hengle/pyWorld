@@ -1,10 +1,8 @@
 import random
 
 import components
-from world import World
-from .move import Move
-from .routine import Routine
-from .stand import Stand
+from behaviour import Move, Routine, Stand
+from core.world import World
 
 
 class Wander(Routine):
@@ -29,11 +27,17 @@ class Wander(Routine):
 
         if not self.move.is_running():
             self.move.target = self.find_random_location()
-            self._world.component_manager.add_component_if_not_exist(self.entity_id, components.Velocity, (1, 1))
+            self._world.ec_manager.create_component(
+                self.entity_id,
+                components.Velocity,
+                (1, 1)
+            )
             self.move.start()
 
         if self.move.is_success() and not self.stand.is_running():
-            self._world.component_manager.remove_component(self.entity_id, components.Velocity)
+            self._world.ec_manager.remove_component(
+                self.entity_id,
+                components.Velocity
+            )
             self.stand.reset()
             self.stand.start()
-

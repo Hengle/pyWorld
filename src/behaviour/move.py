@@ -5,8 +5,8 @@ import pygame
 
 import colors
 import components
-from world import World
-from .routine import Routine
+from behaviour import Routine
+from core.world import World
 
 
 class Move(Routine):
@@ -35,7 +35,7 @@ class Move(Routine):
     def act(self):
         if not self.target:
             self.fail()
-        entity_components = self._world.component_manager.get_entity_components(self.entity_id)
+        entity_components = self._world.ec_manager.get_entity_components(self.entity_id)
         position = entity_components[components.Position]
         velocity = entity_components[components.Velocity]
         boundary = entity_components[components.Boundary]

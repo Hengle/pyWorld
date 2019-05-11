@@ -4,7 +4,7 @@ from typing import Tuple
 import behaviour
 import colors
 import components
-from world import World
+from core import World
 from .system import System
 
 
@@ -20,13 +20,13 @@ class AI(System):
         return random.randint(0, max_x), random.randint(0, max_y)
 
     def init_components(self, entity_id):
-        self._world.component_manager.add_component_if_not_exist(
+        self._world.ec_manager.create_component(
             entity_id,
             components.ShapeSquare,
             10,
             colors.red
         )
-        self._world.component_manager.add_component_if_not_exist(
+        self._world.ec_manager.create_component(
             entity_id,
             components.Boundary,
             12
@@ -36,10 +36,12 @@ class AI(System):
         brain = entity_components[components.Brain]
         self.init_components(entity_id)
 
-        self._world.component_manager.add_component_if_not_exist(entity_id,
-                                                                 components.Acceleration,
-                                                                 0.2,
-                                                                 1)
+        self._world.ec_manager.create_component(
+            entity_id,
+            components.Acceleration,
+            0.2,
+            1
+        )
 
         if not brain.routine:
             brain.routine = behaviour.Repeat(entity_id, self._world, behaviour.Wander(entity_id, self._world))

@@ -2,7 +2,7 @@ import pygame
 
 import components
 import events
-from world import World
+from core import World
 from .system import System
 
 
@@ -21,7 +21,7 @@ class God(System):
         position.vector = pygame.mouse.get_pos()
 
         if events.mouse.is_m1_pressed():
-            bot_entity = self._world.entity_manager.create_entity()
-            self._world.component_manager.add_component(bot_entity, components.Brain)
-            self._world.component_manager.add_component(bot_entity, components.Position, pygame.mouse.get_pos())
-            self._world.component_manager.add_component(bot_entity, components.Render)
+            bot_entity = self._world.ec_manager.create_entity()
+            self._world.ec_manager.create_component(bot_entity, components.Brain)
+            self._world.ec_manager.create_component(bot_entity, components.Position, pygame.mouse.get_pos())
+            self._world.ec_manager.create_component(bot_entity, components.Render)

@@ -3,7 +3,7 @@ from typing import Tuple
 import pygame
 
 import managers
-import world
+from core import world
 from events import events
 
 

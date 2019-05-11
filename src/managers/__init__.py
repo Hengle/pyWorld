@@ -1,3 +1,2 @@
-from .component import ComponentManager
-from .entity import EntityManager
+from .entity_component import EntityComponentManager
 from .system import SystemManager

@@ -1,8 +1,8 @@
 from typing import Set, Type
 
 import systems
+from core import World
 from systems import System
-from world import World
 
 
 class SystemManager:
@@ -13,7 +13,8 @@ class SystemManager:
             systems.God,
             systems.Movement,
             systems.Render,
-            systems.AI
+            systems.AI,
+            systems.Debugging
         }
 
         self.systems = [system(world) for system in system_types]

@@ -6,7 +6,6 @@ from .component import Component
 
 class Vector2D(Component):
     def __init__(self, vector: Tuple = None):
-        super().__init__()
         self.x = vector[0]
         self.y = vector[1]
 

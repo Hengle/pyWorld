@@ -3,18 +3,16 @@ from .component import Component
 
 
 class Render(Component):
-    def __init__(self):
-        super().__init__()
+    pass
 
 
 class RenderShape(Component):
     def __init__(self, color=colors.blue):
-        super().__init__()
         self.color = color
 
 
 class ShapeSquare(RenderShape):
-    def __init__(self, size, color):
+    def __init__(self, size=0, color=None):
         super().__init__(color)
         self.size = size
 
@@ -33,6 +31,6 @@ class ShapeSquare(RenderShape):
 
 
 class ShapeCircle(RenderShape):
-    def __init__(self, radius, color):
+    def __init__(self, radius=0, color=None):
         super().__init__(color)
         self.radius = radius

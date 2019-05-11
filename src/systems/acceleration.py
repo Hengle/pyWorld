@@ -1,5 +1,5 @@
 import components
-from world import World
+from core import World
 from .system import System
 
 

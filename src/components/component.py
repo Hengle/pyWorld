@@ -3,8 +3,7 @@ from typing import TypeVar
 
 
 class Component(ABC):
-    def __init__(self):
-        self.identifier = id(self)
+    pass
 
 
 C_T = TypeVar('C_T', bound=Component)
