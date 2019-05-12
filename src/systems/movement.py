@@ -15,8 +15,11 @@ class Movement(System):
         position = entity_components[components.Position]
         velocity = entity_components[components.Velocity]
 
-        new_x = position.x + velocity.unit_vector.x
-        new_y = position.y + velocity.unit_vector.y
+        speed_delta = self._world.delta_time * 0.15
+        # speed_delta = 1
+        self._world.log_text(entity_id, "speed_delta", speed_delta)
+        new_x = position.x + (velocity.unit_vector.x * speed_delta)
+        new_y = position.y + (velocity.unit_vector.y * speed_delta)
 
         max_x, max_y = self._world.surface.get_size()
 
