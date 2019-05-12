@@ -19,7 +19,7 @@ class Vision(System):
 
         self._world.log_circle(entity_id,
                                "vision_radius",
-                               position=position.vector_int,
+                               position=position.point.as_int_tuple(),
                                color=colors.gray,
                                radius=vision.radius)
 
@@ -28,14 +28,14 @@ class Vision(System):
             if other_id == entity_id:
                 continue
             other_position: components.Position = other_components[components.Position]
-            distance_to = position.distance_to(other_position)
+            distance_to = position.point.distance_to(other_position.point)
             if distance_to < vision.radius:
                 vision.add(other_id)
                 self._world.log_line(entity_id,
                                      f"target:{other_id}",
                                      colors.gray,
-                                     position.vector_int,
-                                     other_position.vector_int)
+                                     position.point.as_int_tuple(),
+                                     other_position.point.as_int_tuple())
             elif other_id in vision.in_range:
                 vision.remove(other_id)
 

@@ -57,5 +57,7 @@ class World:
                                                                                      radius)
 
     def get_random_location(self):
+        import physics
         max_x, max_y = self.surface.get_size()
-        return random.randint(0, max_x), random.randint(0, max_y)
+        random_x, random_y = random.randint(0, max_x), random.randint(0, max_y)
+        return physics.Point(random_x, random_y)

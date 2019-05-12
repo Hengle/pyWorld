@@ -19,7 +19,7 @@ class God(System):
 
     def update_entity(self, entity_id, entity_components):
         position = entity_components[components.Position]
-        position.vector = pygame.mouse.get_pos()
+        position.point = pygame.mouse.get_pos()
 
         if events.key.is_key_pressed(pygame.K_r):
             self.is_random = not self.is_random

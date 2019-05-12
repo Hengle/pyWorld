@@ -13,7 +13,6 @@ class Render(System):
 
     def update_entity(self, entity_id, entity_components):
         position = entity_components[components.Position]
-
         render = entity_components[components.Render]
 
-        render.render(position.vector_int, self._world.surface)
+        render.render(position.point.as_int_tuple(), self._world.surface)

@@ -1,9 +1,7 @@
-import math
-from typing import Tuple
-
 import pygame
 
 import components
+import physics
 from behaviour import Routine
 from core.world import World
 
@@ -12,21 +10,7 @@ class Move(Routine):
 
     def __init__(self, entity_id, world: World):
         super().__init__(entity_id, world)
-        self.target = None
-
-    @property
-    def target(self) -> components.Vector:
-        return self._target
-
-    @target.setter
-    def target(self, target):
-        if isinstance(target, Tuple):
-            target = components.Vector(target)
-        elif isinstance(target, components.Vector):
-            pass
-        else:
-            target = None
-        self._target = target
+        self.target: physics.Point = None
 
     def reset(self):
         pass
@@ -42,19 +26,15 @@ class Move(Routine):
         self._world.log_line(self.entity_id,
                              "target_position",
                              pygame.color.THECOLORS['orange'],
-                             position.vector,
-                             self.target.vector)
+                             position.point.as_int_tuple(),
+                             self.target.as_int_tuple())
 
-        distance_to_target = position.distance_to(self.target)
-        self.log("distance_to", int(distance_to_target))
-        if distance_to_target < boundary.radius:
+        vector_to_target = position.point.to_vector2(self.target)
+
+        self.log(f"distance_to:{self.target}", int(vector_to_target.magnitude))
+
+        if vector_to_target.magnitude < boundary.radius:
             self.succeed()
             return
 
-        angle_to_target = position.angle(self.target)
-        delta = position.delta(self.target)
-
-        new_v_x = math.cos(angle_to_target)
-        new_v_y = math.sin(angle_to_target)
-
-        velocity.vector = new_v_x, new_v_y
+        velocity.vector = vector_to_target

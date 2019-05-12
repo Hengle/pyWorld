@@ -1,4 +1,5 @@
 import components
+import physics
 from behaviour import Move, Routine, Stand
 from core.world import World
 
@@ -23,7 +24,7 @@ class Wander(Routine):
             self._world.ec_manager.create_component(
                 self.entity_id,
                 components.Velocity,
-                (1, 1)
+                physics.Vector2()
             )
             self.move.start()
 

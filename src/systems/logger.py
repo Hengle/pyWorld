@@ -54,7 +54,7 @@ class Logging(System):
     def _draw_text_on_position(self, text, position):
         # print(lines)
         surface_position_map = {}
-        next_position = position.vector_int
+        next_position = position.point.as_int_tuple()
         for text_key, text_value in text.items():
             surface = self._key_value_text_surface(text_key, text_value)
             surface_position_map[surface] = next_position, next_position
