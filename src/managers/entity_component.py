@@ -2,6 +2,7 @@ from typing import Type
 
 import colors
 import components
+import shapes
 from managers import mappers
 
 
@@ -30,7 +31,6 @@ class EntityComponentManager:
 
     def create_entity(self) -> str:
         entity_id = self._entity_components.create_entity()
-        self.create_component(entity_id, components.Debug)
         return entity_id
 
     def get_items(self, required_components=None):
@@ -42,20 +42,19 @@ class EntityComponentManager:
 
         return world_entities
 
-    def create_bot(self, position, size=15):
+    def create_bot(self, position, radius=15):
         bot_id = self.create_entity()
         self.create_component(bot_id, components.Brain)
-        self.create_component(bot_id, components.Position, position)
-        self.create_component(bot_id, components.Render)
-        self.create_component(bot_id, components.ShapeCircle, size, colors.red)
-        self.create_component(bot_id, components.Boundary, size)
-        self.create_component(bot_id, components.Vision, size * 8)
+        self.create_component(bot_id, components.Position, position=position)
+        self.create_component(bot_id, components.Render, shapes.Circle(color=colors.red, radius=radius))
+        self.create_component(bot_id, components.Boundary, radius=radius)
+        self.create_component(bot_id, components.Vision, radius=(radius * 8))
+        self.create_component(bot_id, components.Log, bot_id)
         return bot_id
 
     def create_food(self, position):
         food_id = self.create_entity()
         self.create_component(food_id, components.Food)
-        self.create_component(food_id, components.Position, position)
-        self.create_component(food_id, components.Render)
-        self.create_component(food_id, components.ShapeSquare, 8, colors.green)
+        self.create_component(food_id, components.Position, position=position)
+        self.create_component(food_id, components.Render, shapes.Rectangle(color=colors.green, size=(8, 8)))
         return food_id

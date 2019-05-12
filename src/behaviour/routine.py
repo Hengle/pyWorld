@@ -14,7 +14,7 @@ class Routine:
         self.state = RoutineState.RUNNING
 
     def log(self, key, value):
-        self._world.log_line(self.entity_id, key, value)
+        self._world.log_text(self.entity_id, key, value)
 
     @abc.abstractmethod
     def reset(self):

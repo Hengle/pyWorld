@@ -15,14 +15,14 @@ class Move(Routine):
         self.target = None
 
     @property
-    def target(self) -> components.Vector2D:
+    def target(self) -> components.Vector:
         return self._target
 
     @target.setter
     def target(self, target):
         if isinstance(target, Tuple):
-            target = components.Vector2D(target)
-        elif isinstance(target, components.Vector2D):
+            target = components.Vector(target)
+        elif isinstance(target, components.Vector):
             pass
         else:
             target = None
@@ -39,17 +39,16 @@ class Move(Routine):
         velocity = entity_components[components.Velocity]
         boundary = entity_components[components.Boundary]
 
-        # TODO move lines to logging system
-        pygame.draw.line(self._world.surface,
-                         pygame.color.THECOLORS['orange'],
-                         position.vector,
-                         self.target.vector)
+        self._world.log_line(self.entity_id,
+                             "target_position",
+                             pygame.color.THECOLORS['orange'],
+                             position.vector,
+                             self.target.vector)
 
         distance_to_target = position.distance_to(self.target)
         self.log("distance_to", int(distance_to_target))
         if distance_to_target < boundary.radius:
             self.succeed()
-            velocity.vector = (0, 0)
             return
 
         angle_to_target = position.angle(self.target)

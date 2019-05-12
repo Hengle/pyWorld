@@ -31,4 +31,4 @@ class Movement(System):
             new_y = 0
 
         position.vector = (new_x, new_y)
-        self._world.log_line(entity_id, "position", position.str_int())
+        self._world.log_text(entity_id, "position", position.str_int())

@@ -12,7 +12,7 @@ from .system import System
 class Logging(System):
     def __init__(self, world: World):
         required_components = {
-            components.Debug
+            components.Log
         }
         super().__init__(
             world,
@@ -35,31 +35,36 @@ class Logging(System):
         super().update()
 
     def update_entity(self, entity_id, entity_components: mappers.ComponentMap):
-        debug = entity_components[components.Debug]
+        debug = entity_components[components.Log]
         if not debug.text or len(debug.text) == 1:
             return
-        lines = debug.text.copy()
-        # debug.lines.clear()
-
-        print(lines)
-
         position = entity_components[components.Position]
-
-        surface_position_map = {}
-
-        next_position = position.vector_int
-
+        text = debug.text.copy()
+        drawables = debug.drawables.copy()
+        debug.clear()
         if position:
-            for key, value in lines.items():
-                surface = self.make_font_surface(key, value)
-                surface_position_map[surface] = next_position, next_position
-                surface_rect = surface.get_rect()
-                next_position = next_position[0], next_position[1] + surface_rect.height
+            self._draw_text_on_position(text, position)
 
-            for surface, position in surface_position_map.items():
-                self._world.surface.blit(surface, position)
+        self._draw_drawables(drawables)
 
-    def make_font_surface(self, key, value) -> pygame.Surface:
+    def _draw_drawables(self, drawables):
+        for key, drawable in drawables.items():
+            drawable(self._world.surface)
+
+    def _draw_text_on_position(self, text, position):
+        # print(lines)
+        surface_position_map = {}
+        next_position = position.vector_int
+        for text_key, text_value in text.items():
+            surface = self._key_value_text_surface(text_key, text_value)
+            surface_position_map[surface] = next_position, next_position
+            surface_rect = surface.get_rect()
+            next_position = next_position[0], next_position[1] + surface_rect.height
+
+        for surface, position in surface_position_map.items():
+            self._world.surface.blit(surface, position)
+
+    def _key_value_text_surface(self, key, value) -> pygame.Surface:
         return self.font.render(
             f"{key}:->{value}",
             False,

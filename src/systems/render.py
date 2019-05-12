@@ -1,5 +1,3 @@
-import pygame
-
 import components
 from core import World
 from .system import System
@@ -14,26 +12,8 @@ class Render(System):
         super().__init__(world, required_components)
 
     def update_entity(self, entity_id, entity_components):
-        position: components.Position = entity_components[components.Position]
+        position = entity_components[components.Position]
 
-        circle = entity_components[components.ShapeCircle]
-        square = entity_components[components.ShapeSquare]
+        render = entity_components[components.Render]
 
-        if circle:
-            pygame.draw.circle(
-                self._world.surface,
-                circle.color,
-                position.vector_int,
-                circle.radius,
-                2
-            )
-
-        if square:
-            corners = square.get_corners(position)
-            pygame.draw.lines(
-                self._world.surface,
-                square.color,
-                True,
-                corners,
-                2
-            )
+        render.render(position.vector_int, self._world.surface)

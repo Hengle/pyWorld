@@ -36,7 +36,7 @@ class God(System):
         # if events.mouse.is_m1_pressed():
         if events.key.is_key_pressed(pygame.K_b):
             bot_id = self._world.ec_manager.create_bot(new_entity_position)
-            self._world.log_line(bot_id, "bot_id", bot_id)
+            self._world.log_text(bot_id, "bot_id", bot_id)
 
         if events.key.is_key_pressed(pygame.K_f):
             food_id = self._world.ec_manager.create_food(new_entity_position)
