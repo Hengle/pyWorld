@@ -17,7 +17,7 @@ class Vector2D(Component):
     def vector(self, value: Tuple):
         self.x, self.y = value
 
-    def get_as_int(self) -> Tuple[int, int]:
+    def vector_int(self) -> Tuple[int, int]:
         return int(self.x), int(self.y)
 
     def angle(self, other) -> float:
@@ -53,3 +53,9 @@ class Vector2D(Component):
             return self.x == other.x and self.y == other.y
         else:
             return False
+
+    def __str__(self):
+        return f"{self.x}:{self.y}"
+
+    def str_int(self):
+        return f"{int(self.x)}:{int(self.y)}"

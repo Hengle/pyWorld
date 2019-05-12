@@ -21,7 +21,7 @@ class Logging(System):
 
         self.is_debug = True
 
-        self.font = pygame.font.SysFont(pygame.font.get_default_font(), 5)
+        self.font = pygame.font.SysFont(pygame.font.get_default_font(), 20)
 
     def update(self):
         if events.key.is_key_pressed(pygame.K_d):
@@ -36,25 +36,32 @@ class Logging(System):
 
     def update_entity(self, entity_id, entity_components: mappers.ComponentMap):
         debug = entity_components[components.Debug]
-        if not debug.lines:
+        if not debug.text or len(debug.text) == 1:
             return
-        lines = debug.lines.copy()
+        lines = debug.text.copy()
         # debug.lines.clear()
 
         print(lines)
 
         position = entity_components[components.Position]
 
-        suface_position = {}
+        surface_position_map = {}
+
+        next_position = position.vector_int()
 
         if position:
-            surfaces = [self.make_font_surface(line) for line in lines.items()]
-            for surface in surfaces:
-                surface.get_rect()
+            for key, value in lines.items():
+                surface = self.make_font_surface(key, value)
+                surface_position_map[surface] = next_position, next_position
+                surface_rect = surface.get_rect()
+                next_position = next_position[0], next_position[1] + surface_rect.height
 
-    def make_font_surface(self, line) -> pygame.Surface:
+            for surface, position in surface_position_map.items():
+                self._world.surface.blit(surface, position)
+
+    def make_font_surface(self, key, value) -> pygame.Surface:
         return self.font.render(
-            f"{line[0]}:->{line[1]}",
+            f"{key}:->{value}",
             False,
             colors.red
         )

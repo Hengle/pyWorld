@@ -26,7 +26,7 @@ class World:
         from components.debug import Debug
         debug = self.ec_manager.get_entity_components(entity_id)[Debug]
         if debug:
-            debug.lines[key] = value
+            debug.text[key] = value
 
     def get_random_location(self):
         max_x, max_y = self.surface.get_size()

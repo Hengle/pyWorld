@@ -3,7 +3,6 @@ from typing import Tuple
 
 import pygame
 
-import colors
 import components
 from behaviour import Routine
 from core.world import World
@@ -41,12 +40,12 @@ class Move(Routine):
         boundary = entity_components[components.Boundary]
 
         pygame.draw.line(self._world.surface,
-                         colors.green,
+                         pygame.color.THECOLORS['orange'],
                          position.vector,
                          self.target.vector)
 
         distance_to_target = position.distance_to(self.target)
-        self.log("distance_to", f"{distance_to_target}")
+        self.log("distance_to", int(distance_to_target))
         if distance_to_target < boundary.radius:
             self.succeed()
             velocity.vector = (0, 0)
