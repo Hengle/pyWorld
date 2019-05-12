@@ -21,7 +21,6 @@ class System(abc.ABC):
                     self.update_entity(entity_id, entity_components)
                 except Exception as e:
                     print(f"unable to update entity {entity_id}: {e}")
-
                     traceback.print_exc()
 
     @abc.abstractmethod

@@ -2,7 +2,6 @@ import random
 from typing import Tuple
 
 import behaviour
-import colors
 import components
 from core import World
 from .system import System
@@ -19,22 +18,8 @@ class AI(System):
         max_x, max_y = self._world.surface.get_size()
         return random.randint(0, max_x), random.randint(0, max_y)
 
-    def init_components(self, entity_id):
-        self._world.ec_manager.create_component(
-            entity_id,
-            components.ShapeCircle,
-            15,
-            colors.red
-        )
-        self._world.ec_manager.create_component(
-            entity_id,
-            components.Boundary,
-            12
-        )
-
     def update_entity(self, entity_id, entity_components):
         brain = entity_components[components.Brain]
-        self.init_components(entity_id)
 
         if not brain.routine:
             brain.routine = behaviour.Repeat(entity_id, self._world, behaviour.Wander(entity_id, self._world))

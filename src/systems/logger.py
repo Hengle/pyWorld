@@ -47,7 +47,7 @@ class Logging(System):
 
         surface_position_map = {}
 
-        next_position = position.vector_int()
+        next_position = position.vector_int
 
         if position:
             for key, value in lines.items():

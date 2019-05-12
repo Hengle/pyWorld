@@ -8,4 +8,5 @@ from .position import Position
 from .render import Render, RenderShape, ShapeCircle, ShapeSquare
 from .vector import Vector2D
 from .velocity import Velocity
+from .vision import Vision
 from .brain import Brain

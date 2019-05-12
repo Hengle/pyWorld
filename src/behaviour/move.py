@@ -39,6 +39,7 @@ class Move(Routine):
         velocity = entity_components[components.Velocity]
         boundary = entity_components[components.Boundary]
 
+        # TODO move lines to logging system
         pygame.draw.line(self._world.surface,
                          pygame.color.THECOLORS['orange'],
                          position.vector,

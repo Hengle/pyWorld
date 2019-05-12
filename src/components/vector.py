@@ -10,13 +10,14 @@ class Vector2D(Component):
         self.y = vector[1]
 
     @property
-    def vector(self) -> Tuple:
+    def vector(self) -> Tuple[float, float]:
         return self.x, self.y
 
     @vector.setter
     def vector(self, value: Tuple):
         self.x, self.y = value
 
+    @property
     def vector_int(self) -> Tuple[int, int]:
         return int(self.x), int(self.y)
 
