@@ -1,21 +1,21 @@
 import colors
-import components
+import maps
+from components import component
 from core import World
-from managers import mappers
-from .system import System
+from systems import System
 
 
 class Vision(System):
     def __init__(self, world: World):
         required_components = {
-            components.Position,
-            components.Vision
+            component.Position,
+            component.Vision
         }
         super().__init__(world, required_components)
 
-    def update_entity(self, entity_id, entity_components: mappers.ComponentMap):
-        position = entity_components[components.Position]
-        vision = entity_components[components.Vision]
+    def update_entity(self, entity_id, entity_components: maps.ComponentMap):
+        position = entity_components[component.Position]
+        vision = entity_components[component.Vision]
 
         self._world.log_circle(entity_id,
                                "vision_radius",
@@ -23,11 +23,11 @@ class Vision(System):
                                color=colors.gray,
                                radius=vision.radius)
 
-        world_entities = self._world.ec_manager.get_items([components.Position])
+        world_entities = self._world.ec_manager.get_items([component.Position])
         for other_id, other_components in world_entities:
             if other_id == entity_id:
                 continue
-            other_position: components.Position = other_components[components.Position]
+            other_position: component.Position = other_components[component.Position]
             distance_to = position.point.distance_to(other_position.point)
             if distance_to < vision.radius:
                 vision.add(other_id)

@@ -1,18 +1,18 @@
-import components
+from components import component
 from core import World
-from .system import System
+from systems import System
 
 
 class Render(System):
     def __init__(self, world: World):
         required_components = {
-            components.Render,
-            components.Position
+            component.Render,
+            component.Position
         }
         super().__init__(world, required_components)
 
     def update_entity(self, entity_id, entity_components):
-        position = entity_components[components.Position]
-        render = entity_components[components.Render]
+        position = entity_components[component.Position]
+        render = entity_components[component.Render]
 
         render.render(position.point.as_int_tuple(), self._world.surface)

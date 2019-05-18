@@ -1,13 +1,13 @@
-import components
+from components import component
 from core import World
-from .system import System
+from systems import System
 
 
 class Acceleration(System):
     def __init__(self, world: World):
         required_components = {
-            components.Velocity,
-            components.Acceleration
+            component.Velocity,
+            component.Acceleration
         }
         super().__init__(world, required_components)
 

@@ -1,5 +1,5 @@
+from components.abstract_component import Component
 from physics import Vector2
-from .component import Component
 
 
 class Velocity(Component):

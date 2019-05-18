@@ -2,17 +2,17 @@ import abc
 import traceback
 from typing import Set, Type
 
-import components
+import maps
+from components import Component
 from core import World
-from managers import mappers
 
 
 class System(abc.ABC):
-    def __init__(self, world: World, required_components: Set[Type[components.Component]]):
+    def __init__(self, world: World, required_components: Set[Type[Component]]):
         self._world = world
         if not required_components:
             required_components = set()
-        self.required_components: Set[Type[components.Component]] = required_components
+        self.required_components: Set[Type[Component]] = required_components
 
     def update(self):
         for entity_id, entity_components in self._world.ec_manager.get_items():
@@ -24,7 +24,7 @@ class System(abc.ABC):
                     traceback.print_exc()
 
     @abc.abstractmethod
-    def update_entity(self, entity_id, entity_components: mappers.ComponentMap):
+    def update_entity(self, entity_id, entity_components: maps.ComponentMap):
         pass
 
     def is_applicable(self, entity_components):

@@ -1,7 +1,7 @@
 import time
 
-from behaviour import Routine
 from core.world import World
+from .routine import Routine
 
 
 class Stand(Routine):

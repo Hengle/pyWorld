@@ -1,35 +1,12 @@
-import collections
 import sys
-from typing import Any, Dict, Iterator, Set, Type
+from collections import MutableMapping
+from typing import Any, Dict, Iterator
 
-import components.component
-
-
-class ComponentMap(collections.MutableMapping):
-    def __init__(self):
-        self._components: Dict[Type[components.Component], components.Component] = {}
-
-    def __getitem__(self, item: Type[components.C_T]) -> components.C_T:
-        return self._components.get(item)
-
-    def __setitem__(self, key: Type[components.C_T], value: components.C_T):
-        self._components[key] = value
-
-    def __delitem__(self, key: Type[components.C_T]) -> None:
-        if self._components.get(key):
-            del self._components[key]
-
-    def __len__(self) -> int:
-        return len(self._components)
-
-    def __iter__(self) -> Iterator[Type[components.C_T]]:
-        return iter(self._components.copy())
-
-    def get_component_types(self) -> Set[Type[components.Component]]:
-        return set(self._components.keys())
+from components import Component
+from maps import ComponentMap
 
 
-class EntityComponentMap(collections.MutableMapping):
+class EntityComponentMap(MutableMapping):
     def __init__(self):
         self._entity_components: Dict[Any, ComponentMap] = {}
         self.id_stack = []
@@ -55,10 +32,10 @@ class EntityComponentMap(collections.MutableMapping):
     def items(self):
         return self._entity_components.copy().items()
 
-    def add_component(self, entity_id, component: components.Component) -> None:
+    def add_component(self, entity_id, comp: Component) -> None:
         entity_components = self._entity_components.get(entity_id)
         if entity_components is not None:
-            entity_components[type(component)] = component
+            entity_components[type(comp)] = comp
 
     def create_entity(self) -> Any:
         new_identifier = self._get_next_identifier()

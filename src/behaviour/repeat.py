@@ -1,5 +1,5 @@
-from behaviour import Routine
 from core.world import World
+from .routine import Routine
 
 
 class Repeat(Routine):

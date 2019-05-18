@@ -1,7 +1,7 @@
 import typing
 
+from components.abstract_component import Component
 from physics import Point
-from .component import Component
 
 
 class Position(Component):

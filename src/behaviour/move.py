@@ -1,9 +1,9 @@
 import pygame
 
-import components
 import physics
-from behaviour import Routine
+from components import component
 from core.world import World
+from .routine import Routine
 
 
 class Move(Routine):
@@ -19,9 +19,9 @@ class Move(Routine):
         if not self.target:
             self.fail()
         entity_components = self._world.ec_manager.get_entity_components(self.entity_id)
-        position = entity_components[components.Position]
-        velocity = entity_components[components.Velocity]
-        boundary = entity_components[components.Boundary]
+        position = entity_components[component.Position]
+        velocity = entity_components[component.Velocity]
+        boundary = entity_components[component.Boundary]
 
         self._world.log_line(self.entity_id,
                              "target_position",

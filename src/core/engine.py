@@ -2,9 +2,9 @@ from typing import Tuple
 
 import pygame
 
-import managers
 from core import world
 from events import events
+from managers import system_manager
 
 
 class WorldEngine:
@@ -20,7 +20,7 @@ class WorldEngine:
 
         self.world = world.World(self.surface)
         # self.event_manager = events.EventManager()
-        self.system_manager = managers.SystemManager(self.world)
+        self.system_manager = system_manager.SystemManager(self.world)
         self.is_running = True
 
     def tick_clock(self):

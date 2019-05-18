@@ -1,5 +1,5 @@
 import behaviour
-from .component import Component
+from components.abstract_component import Component
 
 
 class Brain(Component):

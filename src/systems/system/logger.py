@@ -1,18 +1,18 @@
 import pygame
 
 import colors
-import components
 import events.events
 import events.key
+import maps
+from components import component
 from core import World
-from managers import mappers
-from .system import System
+from systems import System
 
 
 class Logging(System):
     def __init__(self, world: World):
         required_components = {
-            components.Log
+            component.Log
         }
         super().__init__(
             world,
@@ -34,11 +34,11 @@ class Logging(System):
             return
         super().update()
 
-    def update_entity(self, entity_id, entity_components: mappers.ComponentMap):
-        debug = entity_components[components.Log]
+    def update_entity(self, entity_id, entity_components: maps.ComponentMap):
+        debug = entity_components[component.Log]
         if not debug.text or len(debug.text) == 1:
             return
-        position = entity_components[components.Position]
+        position = entity_components[component.Position]
         text = debug.text.copy()
         drawables = debug.drawables.copy()
         debug.clear()

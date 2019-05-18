@@ -1,4 +1,4 @@
-from .component import Component
+from components.abstract_component import Component
 
 
 class Vision(Component):

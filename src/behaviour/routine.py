@@ -1,6 +1,6 @@
 import abc
 
-from behaviour import RoutineState
+from .state import RoutineState
 from core.world import World
 
 

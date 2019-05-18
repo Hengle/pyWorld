@@ -1,7 +1,9 @@
-import components
 import physics
-from behaviour import Move, Routine, Stand
+from components import component
 from core.world import World
+from .move import Move
+from .routine import Routine
+from .stand import Stand
 
 
 class Wander(Routine):
@@ -23,7 +25,7 @@ class Wander(Routine):
             self.move.target = self._world.get_random_location()
             self._world.ec_manager.create_component(
                 self.entity_id,
-                components.Velocity,
+                component.Velocity,
                 physics.Vector2()
             )
             self.move.start()
@@ -31,7 +33,7 @@ class Wander(Routine):
         if self.move.is_success() and not self.stand.is_running():
             self._world.ec_manager.remove_component(
                 self.entity_id,
-                components.Velocity
+                component.Velocity
             )
             self.stand.reset()
             self.stand.start()

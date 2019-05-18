@@ -1,8 +1,7 @@
 from typing import Set, Type
 
-import systems
 from core import World
-from systems import System
+from systems import System, system
 
 
 class SystemManager:
@@ -10,15 +9,15 @@ class SystemManager:
         self._world = world
 
         system_types: Set[Type[System]] = {
-            systems.God,
-            systems.Vision,
-            systems.Movement,
-            systems.Render,
-            systems.AI,
-            systems.Logging
+            system.God,
+            system.Vision,
+            system.Movement,
+            system.Render,
+            system.AI,
+            system.Logging
         }
 
-        self._systems = [system(world) for system in system_types]
+        self._systems = [sys(world) for sys in system_types]
 
     def update(self):
         for system in self._systems:

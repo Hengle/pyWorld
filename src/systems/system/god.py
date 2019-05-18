@@ -1,16 +1,16 @@
 import pygame
 
-import components
 import events
+from components import component
 from core import World
-from .system import System
+from systems import System
 
 
 class God(System):
 
     def __init__(self, world: World):
         required_components = {
-            components.God
+            component.God
         }
         super().__init__(world, required_components)
 
@@ -18,7 +18,7 @@ class God(System):
         self.is_random = False
 
     def update_entity(self, entity_id, entity_components):
-        position = entity_components[components.Position]
+        position = entity_components[component.Position]
         position.point = pygame.mouse.get_pos()
 
         if events.key.is_key_pressed(pygame.K_r):

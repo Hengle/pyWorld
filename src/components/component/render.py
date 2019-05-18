@@ -1,5 +1,5 @@
 import shapes
-from .component import Component
+from components.abstract_component import Component
 
 
 class Render(Component):

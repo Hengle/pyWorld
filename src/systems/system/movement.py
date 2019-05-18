@@ -1,19 +1,19 @@
-import components
+from components import component
 from core import World
-from .system import System
+from systems import System
 
 
 class Movement(System):
     def __init__(self, world: World):
         required_components = {
-            components.Position,
-            components.Velocity
+            component.Position,
+            component.Velocity
         }
         super().__init__(world, required_components)
 
     def update_entity(self, entity_id, entity_components):
-        position = entity_components[components.Position]
-        velocity = entity_components[components.Velocity]
+        position = entity_components[component.Position]
+        velocity = entity_components[component.Velocity]
 
         speed_delta = self._world.delta_time * 0.15
         # speed_delta = 1
